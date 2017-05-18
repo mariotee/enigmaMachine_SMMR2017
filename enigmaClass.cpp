@@ -181,47 +181,52 @@ void Enigma::write( string message )
             rotorFlag1 = true;
         }
         //get original input
-
         char input = characters[i];
-        //initial swap
-
-        (plugboardPairs[input] == '\0')? input = input : input = plugboardPairs[input];
-        //cout << "PB: " << input << endl;
-        input = writeRotorF(rotor3,input);
-        //cout << "Post Rotor3: " << input << endl;
-        input = writeRotorF(rotor2,input);
-        //cout << "Post Rotor2: " << input << endl;
-        input = writeRotorF(rotor1,input);
-        //cout << "Post Rotor1: " << input << endl;
-        //reflector stage
-        input = reflector[input];
-        //back through rotors
-        //cout << "Post Reflector: " << input << endl;
-        input = writeRotorR(rotor1,input);
-        //cout << "Post Rotor1: " << input << endl;
-        input = writeRotorR(rotor2,input);
-        //cout << "Post Rotor2: " << input << endl;
-        input = writeRotorR(rotor3,input);
-        //cout << "Post Rotor3: " << input << endl;
-        //final swap
-        (plugboardPairs[input] == '\0')? input = input : input = plugboardPairs[input];
-        //cout << "PB: " << input << endl;
-        /*KEEP this line to write message*/
-        cout << input;
-        //deal with rotor steps
-        rotor3.rotorStep();     //turns rotor
-        if(rotorFlag1)
-        {   //if this is on its turnover positon, rotor2 turns after encrypts char
-            rotor2.rotorStep();
-        }
-        //check for double step
-        if( rotor2.getTurnover() == char(ASCII + rotor2.getcurrentPos()) )
+        if( input == ' ' )
         {
-            rotorFlag2 = true;
+            cout << ' ';
         }
-        if(rotorFlag2)
-        {   //if this is on its turnover positon, rotor1 turns after encrypts char
-            rotor1.rotorStep();
+        else
+        {
+            //initial swap
+            (plugboardPairs[input] == '\0')? input = input : input = plugboardPairs[input];
+            //cout << "PB: " << input << endl;
+            input = writeRotorF(rotor3,input);
+            //cout << "Post Rotor3: " << input << endl;
+            input = writeRotorF(rotor2,input);
+            //cout << "Post Rotor2: " << input << endl;
+            input = writeRotorF(rotor1,input);
+            //cout << "Post Rotor1: " << input << endl;
+            //reflector stage
+            input = reflector[input];
+            //back through rotors
+            //cout << "Post Reflector: " << input << endl;
+            input = writeRotorR(rotor1,input);
+            //cout << "Post Rotor1: " << input << endl;
+            input = writeRotorR(rotor2,input);
+            //cout << "Post Rotor2: " << input << endl;
+            input = writeRotorR(rotor3,input);
+            //cout << "Post Rotor3: " << input << endl;
+            //final swap
+            (plugboardPairs[input] == '\0')? input = input : input = plugboardPairs[input];
+            //cout << "PB: " << input << endl;
+            /*KEEP this line to write message*/
+            cout << input;
+            //deal with rotor steps
+            rotor3.rotorStep();     //turns rotor
+            if(rotorFlag1)
+            {   //if this is on its turnover positon, rotor2 turns after encrypts char
+                rotor2.rotorStep();
+            }
+            //check for double step
+            if( rotor2.getTurnover() == char(ASCII + rotor2.getcurrentPos()) )
+            {
+                rotorFlag2 = true;
+            }
+            if(rotorFlag2)
+            {   //if this is on its turnover positon, rotor1 turns after encrypts char
+                rotor1.rotorStep();
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 /*Programmer: Mario Torres
  *Date Created: 05.02.2017
- *Last Updated: 05.17.2017
+ *Last Updated: 05.18.2017
  *Description:  main.cpp is the main file for a simulation of the enigma machine
  *              that Alan Turing helped to solve during World War II
  *  based on the Enigma M3, this program will assume the following behaviour:
@@ -80,9 +80,12 @@ int main( void )
     cout << "Type the message you would like to encrypt and hit ENTER\n";
     string message;
     getline(cin, message);
-
+    cout << endl;
+    //call write method to print encrypted message
     enigma.write(message);
-
+    cout << endl;
+    cout << "\nWrite this code down along with your settings now.\n";
+    cout << "You can decrypt it by sending it through this program again with the same settings.\n";
     return 0;
  }
 
