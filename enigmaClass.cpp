@@ -121,13 +121,13 @@ void Enigma::plugboardSetup()
     vector<char> lettersUsed;
     for( int i = 0; i < 20; ++i )
     {
-        cout << "input a letter for pair #" << (i+2)/2 << ": " << endl; //to get clean numbers 1-10
+        cout << "input a letter for pair #" << (i+2)/2 << ": "; //to get clean numbers 1-10
         cin >> letters[i];
         cin.ignore();
         while( std::find(lettersUsed.begin(),lettersUsed.end(),letters[i]) != lettersUsed.end() )
         {
             cout << "that seems to be a duplicate\n";
-            cout << "input a letter for pair #" << (i+2)/2 << ": " << endl;
+            cout << "input a letter for pair #" << (i+2)/2 << ": ";
             cin >> letters[i];
             cin.ignore();
         }
@@ -172,6 +172,8 @@ void Enigma::write( string message )
     //copy string to char array
     strcpy(characters, message.c_str());
 
+    checkMessage(characters);
+
     for( int i = 0; i < message.size(); ++i )
     {   //first check for turnover
         bool rotorFlag1 = false;
@@ -190,26 +192,17 @@ void Enigma::write( string message )
         {
             //initial swap
             (plugboardPairs[input] == '\0')? input = input : input = plugboardPairs[input];
-            //cout << "PB: " << input << endl;
             input = writeRotorF(rotor3,input);
-            //cout << "Post Rotor3: " << input << endl;
             input = writeRotorF(rotor2,input);
-            //cout << "Post Rotor2: " << input << endl;
             input = writeRotorF(rotor1,input);
-            //cout << "Post Rotor1: " << input << endl;
             //reflector stage
             input = reflector[input];
             //back through rotors
-            //cout << "Post Reflector: " << input << endl;
             input = writeRotorR(rotor1,input);
-            //cout << "Post Rotor1: " << input << endl;
             input = writeRotorR(rotor2,input);
-            //cout << "Post Rotor2: " << input << endl;
             input = writeRotorR(rotor3,input);
-            //cout << "Post Rotor3: " << input << endl;
             //final swap
             (plugboardPairs[input] == '\0')? input = input : input = plugboardPairs[input];
-            //cout << "PB: " << input << endl;
             /*KEEP this line to write message*/
             cout << input;
             //deal with rotor steps
@@ -249,4 +242,15 @@ char Enigma::writeRotorR( Rotor r, char c )
     char output = (index - thisP < 0 )? index - (thisP - ALPHA) + ASCII : index - thisP + ASCII;
 
     return output;
+}
+
+void Enigma::checkMessage( char message[] )
+{
+    for( int i = 0; i < (sizeof(message) / sizeof(message[0])); ++i )
+    {
+        if( message[i] < ASCII || message[i] >= ASCII + ALPHA )
+        {
+            message[i] = ' ';
+        }
+    }
 }

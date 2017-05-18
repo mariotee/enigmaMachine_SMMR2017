@@ -77,7 +77,7 @@ int main( void )
     //setup plugboard settings (pairs of letters to swap)
     enigma.plugboardSetup();
     cout << "\nGreat! Let's get started.\n";
-    cout << "Type the message you would like to encrypt and hit ENTER\n";
+    cout << "Type the message you would like to encrypt and hit ENTER (please use only lower case letters and spaces):\n";
     string message;
     getline(cin, message);
     cout << endl;
@@ -86,6 +86,9 @@ int main( void )
     cout << endl;
     cout << "\nWrite this code down along with your settings now.\n";
     cout << "You can decrypt it by sending it through this program again with the same settings.\n";
+    cout << "\nPress Q and hit ENTER to exit the program...";
+    cin >> choice;
+    cin.ignore();
     return 0;
  }
 

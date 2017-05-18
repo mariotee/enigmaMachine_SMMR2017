@@ -30,10 +30,12 @@ public:
     //other methods/functions to be implemented in cpp file
     void plugboardSetup();  //to set up plugboard pairs
     void write( string message );   //to write a message (will also be used to decrypt
-    char writeRotorF( Rotor r, char c );
-    char writeRotorR( Rotor r, char c );
 
 private:
+    //private methods/functions
+    void checkMessage( char message[] );
+    char writeRotorF( Rotor r, char c );
+    char writeRotorR( Rotor r, char c );
     //members
     Rotor rotor1;
     Rotor rotor2;
